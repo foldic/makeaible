@@ -23,13 +23,13 @@
         data-rotate="0"    <!-- rotace celého oválu (°) -->
         data-start="-90">  <!-- startovní úhel (°) -->
         
-    <button class="icon" data-label=" ">
+    <button class="icon" data-label=" c ">
       <img src="images/game.png" alt="Karetní hra ASTRAVELLUM" />
       <span class="label">Karetní hra ASTRAVELLUM</span>
       <div class="desc">Popis karetní hry – sem napiš vlastní text.</div>
     </button>
 
-    <button class="icon" data-label=" ">
+    <button class="icon" data-label=" xxx ">
       <img src="images/book.png" alt="aaa" />
       <span class="label">sracka</span>
       <div class="desc">hovno</div>
@@ -213,6 +213,6 @@
 
 </body>
 </html>
-//git add -A
+// git add -A
 git commit -m .
 git push
