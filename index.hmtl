@@ -23,49 +23,49 @@
         data-rotate="0"    <!-- rotace celého oválu (°) -->
         data-start="-90">  <!-- startovní úhel (°) -->
         
-    <button class="icon" data-label="Karetní hra ASTRAVELLUM">
+    <button class="icon" data-label=" ">
       <img src="images/game.png" alt="Karetní hra ASTRAVELLUM" />
       <span class="label">Karetní hra ASTRAVELLUM</span>
       <div class="desc">Popis karetní hry – sem napiš vlastní text.</div>
     </button>
 
-    <button class="icon" data-label="Kniha — příběh a rasy">
+    <button class="icon" data-label=" ">
       <img src="images/book.png" alt="aaa" />
-      <span class="label">Kniha — příběh a rasy</span>
+      <span class="label">sracka</span>
       <div class="desc">hovno</div>
     </button>
 
-    <button class="icon" data-label="3D figurky a modely">
-      <img src="images/figures.png" alt="3D figurky a modely" />
+    <button class="icon" data-label=" ">
+      <img src="*/Figures.png" alt="3D figurky a modely" />
       <span class="label">3D figurky a modely</span>
       <div class="desc">Popis figurek – sem napiš vlastní text.</div>
     </button>
 
-    <button class="icon" data-label="Web & Aplikace">
+    <button class="icon" data-label=" ">
       <img src="images/app.png" alt="Web & Aplikace" />
       <span class="label">Web & Aplikace</span>
       <div class="desc">Popis webu a aplikace – sem napiš vlastní text.</div>
     </button>
 
-    <button class="icon" data-label="Multiplayer">
+    <button class="icon" data-label=" ">
       <img src="images/multiplayer.png" alt="Multiplayer" />
       <span class="label">Multiplayer</span>
       <div class="desc">Popis multiplayeru – sem napiš vlastní text.</div>
     </button>
 
-    <button class="icon" data-label="Rozšíření">
+    <button class="icon" data-label=" ">
       <img src="images/expansion.png" alt="Rozšíření" />
       <span class="label">Rozšíření</span>
       <div class="desc">Popis rozšíření – sem napiš vlastní text.</div>
     </button>
 
-    <button class="icon" data-label="Sbírka karet">
+    <button class="icon" data-label=" ">
       <img src="images/cards.png" alt="Sbírka karet" />
       <span class="label">Sbírka karet</span>
       <div class="desc">Popis sbírky karet – sem napiš vlastní text.</div>
     </button>
 
-    <button class="icon" data-label="Komunita">
+    <button class="icon" data-label=" ">
       <img src="images/community.png" alt="Komunita" />
       <span class="label">Komunita</span>
       <div class="desc">Popis komunity – sem napiš vlastní text.</div>
