@@ -109,4 +109,4 @@ body.modal-open .backdrop{ background:rgba(0,0,0,var(--dim)); pointer-events:aut
   border-radius: 10px;
   padding: 10px 12px;
   text-align: center;   /* popis taky doprostřed */
-}
+}  
