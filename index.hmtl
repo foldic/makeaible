@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Makeaible – kruh ikon</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Stmavení pozadí -->
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+  <header>
+    <h1>Co tě čeká na projektu Makeaible</h1>
+    <p>Klikni na ikonu – zobrazí se uprostřed s popisem.</p>
+  </header>
+
+  <!-- Ovál ikon -->
+  <main class="circle" id="circle"
+        aria-label="Ovál ikon projektu"
+        data-rx="85%"      <!-- vodorovný poloměr -->
+        data-ry="30%"      <!-- svislý poloměr -->
+        data-rotate="0"    <!-- rotace celého oválu (°) -->
+        data-start="-90">  <!-- startovní úhel (°) -->
+        
+    <button class="icon" data-label="Karetní hra ASTRAVELLUM">
+      <img src="images/game.png" alt="Karetní hra ASTRAVELLUM" />
+      <span class="label">Karetní hra ASTRAVELLUM</span>
+      <div class="desc">Popis karetní hry – sem napiš vlastní text.</div>
+    </button>
+
+    <button class="icon" data-label="Kniha — příběh a rasy">
+      <img src="images/book.png" alt="Kniha — příběh a rasy" />
+      <span class="label">Kniha — příběh a rasy</span>
+      <div class="desc">hovno</div>
+    </button>
+
+    <button class="icon" data-label="3D figurky a modely">
+      <img src="images/figures.png" alt="3D figurky a modely" />
+      <span class="label">3D figurky a modely</span>
+      <div class="desc">Popis figurek – sem napiš vlastní text.</div>
+    </button>
+
+    <button class="icon" data-label="Web & Aplikace">
+      <img src="images/app.png" alt="Web & Aplikace" />
+      <span class="label">Web & Aplikace</span>
+      <div class="desc">Popis webu a aplikace – sem napiš vlastní text.</div>
+    </button>
+
+    <button class="icon" data-label="Multiplayer">
+      <img src="images/multiplayer.png" alt="Multiplayer" />
+      <span class="label">Multiplayer</span>
+      <div class="desc">Popis multiplayeru – sem napiš vlastní text.</div>
+    </button>
+
+    <button class="icon" data-label="Rozšíření">
+      <img src="images/expansion.png" alt="Rozšíření" />
+      <span class="label">Rozšíření</span>
+      <div class="desc">Popis rozšíření – sem napiš vlastní text.</div>
+    </button>
+
+    <button class="icon" data-label="Sbírka karet">
+      <img src="images/cards.png" alt="Sbírka karet" />
+      <span class="label">Sbírka karet</span>
+      <div class="desc">Popis sbírky karet – sem napiš vlastní text.</div>
+    </button>
+
+    <button class="icon" data-label="Komunita">
+      <img src="images/community.png" alt="Komunita" />
+      <span class="label">Komunita</span>
+      <div class="desc">Popis komunity – sem napiš vlastní text.</div>
+    </button>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" aria-modal="true" role="dialog" hidden>
+    <div class="modal-card" id="modalCard">
+      <img id="modalImg" alt="">
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
+<script>
+  // ===== Ovál s plně funkčním rx/ry a živým laděním =====
+  const circle = document.getElementById('circle');
+  const icons  = Array.from(circle.querySelectorAll('.icon'));
+
+  // Nastavení: když dáš ry v %, vůči čemu se má brát? "width" nebo "height"
+  const BASE_FOR_RY_PERCENT = 'width'; // ← změň na "height", pokud chceš
+
+  // převod hodnot "320px" | "40%" | "0.45" | "30vh" | "30vw" (podporuje i 0,45)
+  function toPx(val, rect, axis = 'width') {
+    if (val == null) return null;
+    let s = String(val).trim().replace(',', '.');
+
+    if (s.endsWith('px')) return parseFloat(s);
+
+    if (s.endsWith('%')) {
+      const pct = parseFloat(s) / 100;
+      const base = axis === 'height' ? rect.height : rect.width;
+      return pct * base;
+    }
+
+    if (s.endsWith('vh')) {
+      return (parseFloat(s) / 100) * window.innerHeight;
+    }
+    if (s.endsWith('vw')) {
+      return (parseFloat(s) / 100) * window.innerWidth;
+    }
+
+    // čisté číslo: ber jako poměr vůči dané ose (0..1)
+    const num = parseFloat(s);
+    if (Number.isFinite(num)) {
+      const base = axis === 'height' ? rect.height : rect.width;
+      return num <= 1 ? num * base : num; // 0..1 = poměr, >1 = pixely
+    }
+    return null;
+  }
+
+  function layoutEllipse() {
+    if (!icons.length) return;
+
+    const rect = circle.getBoundingClientRect();
+    const item = icons[0].getBoundingClientRect().width || 0;
+    const pad  = 8;
+
+    // načtení atributů
+    const rxAttr = circle.getAttribute('data-rx');
+    const ryAttr = circle.getAttribute('data-ry');
+    const start  = parseFloat(circle.getAttribute('data-start')  ?? -90);
+    const rotate = parseFloat(circle.getAttribute('data-rotate') ?? 0);
+
+    // hrubé poloměry z atributů (nezávisle!)
+    const rxRaw = toPx(rxAttr, rect, 'width')  ?? rect.width  / 2;
+    const ryRaw = toPx(ryAttr, rect, BASE_FOR_RY_PERCENT) ?? rect.height / 2;
+
+    // vnitřní poloměry (odečteme půlku ikony + padding)
+    const rx = Math.max(0, rxRaw - item / 2 - pad);
+    const ry = Math.max(0, ryRaw - item / 2 - pad);
+
+    const n   = icons.length;
+    const a0  = (start  * Math.PI) / 180;
+    const rot = (rotate * Math.PI) / 180;
+
+    icons.forEach((el, i) => {
+      const a  = (2 * Math.PI * i) / n + a0;
+      const x0 = Math.cos(a) * rx;
+      const y0 = Math.sin(a) * ry;
+
+      // rotace oválu
+      const x =  x0 * Math.cos(rot) - y0 * Math.sin(rot);
+      const y =  x0 * Math.sin(rot) + y0 * Math.cos(rot);
+
+      el.style.setProperty('--tx', `${x}px`);
+      el.style.setProperty('--ty', `${y}px`);
+    });
+  }
+
+  // přepočet při načtení + resize
+  window.addEventListener('load', layoutEllipse);
+  window.addEventListener('resize', () => requestAnimationFrame(layoutEllipse));
+
+  // živé ladění: změna data-* atributů přepočítá rozložení
+  new MutationObserver(layoutEllipse).observe(circle, {
+    attributes: true,
+    attributeFilter: ['data-rx', 'data-ry', 'data-rotate', 'data-start']
+  });
+
+  // ===== Modal logika (beze změn) =====
+  const body       = document.body;
+  const backdrop   = document.getElementById('backdrop');
+  const modal      = document.getElementById('modal');
+  const modalCard  = document.getElementById('modalCard');
+  const modalImg   = document.getElementById('modalImg');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc  = document.getElementById('modalDesc');
+
+  function openModal(fromBtn){
+    const img   = fromBtn.querySelector('img');
+    const title = fromBtn.querySelector('.label')?.textContent || fromBtn.dataset.label || '';
+    const desc  = fromBtn.querySelector('.desc')?.textContent || '';
+
+    modalImg.src = img.src;
+    modalImg.alt = img.alt || title;
+    modalTitle.textContent = title;
+    modalDesc.textContent  = desc;
+
+    body.classList.add('modal-open');
+    backdrop.classList.add('show');
+    modal.hidden = false;
+  }
+  function closeModal(){
+    body.classList.remove('modal-open');
+    backdrop.classList.remove('show');
+    modal.hidden = true;
+    modalImg.removeAttribute('src');
+  }
+
+  circle.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.icon');
+    if (!btn) return;
+    openModal(btn);
+  });
+  backdrop.addEventListener('click', closeModal);
+  modalImg.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=>{
+    if (!modalCard.contains(e.target)) closeModal();
+  });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+
+</body>
+</html>
+//git add -A
+git commit -m 
+git push
