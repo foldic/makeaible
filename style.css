@@ -7,10 +7,13 @@
 *{ box-sizing:border-box; }
 
 body{
-  margin:0; min-height:100dvh; color:#fff;
+  margin:0;
+  min-height:100dvh;
+  display:flex;                 /* důležité: flex kontejner */
+  justify-content:center;       /* centrování vodorovně */
+  align-items:center;           /* centrování svisle */
+  color:#fff;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  justify-content: center;      /* centrování vodorovně */
-  align-items: center;          /* centrování svisle */
   background:#0b1020 url("images/background.png") center/cover fixed no-repeat;
 }
 
@@ -111,4 +114,4 @@ body.modal-open .backdrop{ background:rgba(0,0,0,var(--dim)); pointer-events:aut
   border-radius: 10px;
   padding: 10px 12px;
   text-align: center;   /* popis taky doprostřed */
-}  
+}
