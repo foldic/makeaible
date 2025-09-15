@@ -39,6 +39,14 @@ body.modal-open .backdrop{ background:rgba(0,0,0,var(--dim)); pointer-events:aut
   width:var(--circle-size); height:var(--circle-size);
   margin:auto;
 }
+.circle span.label {
+  display: none;
+  }
+
+.modal span.label,
+.lightbox span.label {
+  display: inline;
+  }
 
 .icon{
   position:absolute; top:50%; left:50%;
